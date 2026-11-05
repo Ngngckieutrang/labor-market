@@ -237,10 +237,7 @@ st.markdown("""
   <h1 style="margin:0;font-size:28px;font-weight:800">
     🇻🇳 Phân Tích Thị Trường Lao Động Việt Nam
   </h1>
-  <p style="margin:8px 0 0;font-size:16px;opacity:.9">
-    Khoa học dữ liệu và ứng dụng · Lớp 26TH01, 26TH02, 26TH03
-  </p>
-  <p style="margin:4px 0 0;font-size:13px;opacity:.75">
+  <p style="margin:8px 0 0;font-size:14px;opacity:.85">
     Nguồn: TopCV.vn · CareerViet.vn · Vieclam24h.vn · Phân tích bởi AI Pipeline
   </p>
 </div>
@@ -817,7 +814,6 @@ st.markdown(
     f"""
     <div style="text-align:center;color:#9ca3af;font-size:13px;padding:16px 0">
       📊 <strong>Hệ thống Phân tích Thị trường Lao động Việt Nam v2.0</strong><br>
-      Môn: Khoa học dữ liệu và ứng dụng · Lớp 26TH01, 26TH02, 26TH03<br>
       Nguồn dữ liệu: TopCV.vn · CareerViet.vn · Vieclam24h.vn<br>
       Cập nhật: {meta.get('ngay_phan_tich', 'N/A')} · Tổng bản ghi: {meta.get('tong_ban_ghi', 0):,}
     </div>

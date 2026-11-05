@@ -574,8 +574,16 @@ with tab4:
     fig.add_trace(go.Bar(x=years_full, y=rtn_full, name="Thu hẹp việc Routine (%)",
                          marker_color="#e5e7eb", opacity=0.6, yaxis="y2"))
 
-    fig.add_vline(x="2026", line_dash="dash", line_color="#94a3b8",
-                  annotation_text="Hiện tại (2026)", annotation_position="top right")
+    fig.add_annotation(
+        x="2026", y=ai_full[0],
+        text="Hiện tại (2026)",
+        showarrow=True,
+        arrowhead=2,
+        arrowsize=1,
+        arrowcolor="#94a3b8",
+        ax=0, ay=-35,
+        font=dict(color="#475569", size=12, family="Arial")
+    )
 
     fig.update_layout(
         title="Dự báo xu hướng kỹ năng thị trường lao động Việt Nam 2026–2031",

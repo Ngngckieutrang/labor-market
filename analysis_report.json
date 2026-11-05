@@ -1,0 +1,423 @@
+{
+  "metadata": {
+    "ten_de_tai": "Phân tích thị trường lao động tại Việt Nam",
+    "nguon_du_lieu": [
+      "TopCV.vn",
+      "CareerViet.vn",
+      "Vieclam24h.vn"
+    ],
+    "ngay_phan_tich": "2026-11-05 14:31",
+    "tong_ban_ghi": 1000,
+    "phien_ban": "2.0.0"
+  },
+  "thong_ke_mo_ta": {
+    "total_records": 1000,
+    "trinh_do": {
+      "Đại học": 510,
+      "THPT": 186,
+      "Thạc sĩ": 150,
+      "Trung cấp": 93,
+      "Cao đẳng": 61
+    },
+    "thoi_gian_lam_viec": {
+      "Toàn thời gian": 572,
+      "Giờ hành chính": 243,
+      "Theo ca": 93,
+      "Theo ca 4 giờ": 62,
+      "Bán thời gian": 30
+    },
+    "chuyen_mon": {
+      "Công nghệ thông tin": 300,
+      "null": 216,
+      "Kế toán - Tài chính": 153,
+      "Marketing": 61,
+      "Luật kinh tế": 60,
+      "Giáo dục - Đào tạo": 60,
+      "Thiết kế đồ họa": 60,
+      "Quản trị nhân sự": 30,
+      "Kinh doanh": 30,
+      "An toàn thông tin": 30
+    },
+    "vi_tri_cong_viec": {
+      "Văn phòng": 331,
+      "Phần mềm": 270,
+      "Doanh nghiệp": 217,
+      "Quản trị mạng nội bộ": 90,
+      "Nhân viên": 62,
+      "Quản lý": 30
+    },
+    "ngoai_ngu": {
+      "null": 370,
+      "Tiếng Anh": 120,
+      "Toeic 600": 90,
+      "IELTS 7.0": 90,
+      "Toeic 500": 60,
+      "IELTS 6.5": 60,
+      "IELTS 5.0": 60,
+      "IELTS 6.0": 60,
+      "Toeic 450": 30,
+      "Hoa ngữ": 30,
+      "IELTS 7.5": 30
+    },
+    "soft_skill_rates_pct": {
+      "Thuyết trình": 36.0,
+      "Làm việc nhóm": 75.6,
+      "Sáng tạo": 45.1,
+      "Đàm phán": 24.1,
+      "Giao tiếp": 72.7
+    },
+    "has_coding_pct": 51.2,
+    "has_ai_skill_pct": 36.0,
+    "has_foreign_lang_pct": 63.0,
+    "kinh_nghiem": {
+      "2 năm": 423,
+      "1 năm": 212,
+      "3 năm": 180,
+      "không": 155,
+      "5 năm": 30
+    },
+    "top_companies": {
+      "Công ty Luật TNHH Minh Khuê": 47,
+      "Công ty CP Bán lẻ FPT": 46,
+      "Công ty Bảo vệ Ngày & Đêm": 46,
+      "Doanh nghiệp Tư nhân Thành Đạt": 45,
+      "Zalo - VNG": 39,
+      "FPT Software": 39,
+      "VNG Corporation": 39,
+      "Tập đoàn Viettel": 39,
+      "Tập đoàn Bưu chính VNPT": 39,
+      "CMC Corporation": 39,
+      "Vingroup Tech": 39,
+      "Công ty An ninh mạng CyRadar": 39,
+      "Công ty Cổ phần VNPAY": 39,
+      "Công ty TNHH VNEXT Holdings": 39,
+      "Công ty Dịch vụ Bảo vệ Long Hải": 31
+    },
+    "top_jobs": {
+      "Nhân viên an ninh tòa nhà": 30,
+      "Kỹ sư Thiết kế đồ họa 3D": 30,
+      "Kỹ sư An ninh mạng": 30,
+      "Kỹ sư AI / Machine Learning": 30,
+      "Nghiên cứu viên Khoa học dữ liệu": 30,
+      "Trưởng phòng Công nghệ (CTO)": 30,
+      "Bảo vệ mục tiêu doanh nghiệp": 28,
+      "Nhân viên phục vụ nhà hàng": 28,
+      "Tài xế xe tải nội thành": 28,
+      "Nhân viên kho — kiểm hàng": 28,
+      "Nhân viên Telesale": 28,
+      "Công nhân sản xuất": 27,
+      "Kế toán tổng hợp": 27,
+      "Kế toán thuế": 27,
+      "Nhân viên thu ngân": 27
+    }
+  },
+  "ai_vulnerability_index": {
+    "null": {
+      "so_viec": 216,
+      "avi_score": 89.4,
+      "risk_level": "RẤT CAO",
+      "routine_ratio_pct": 100.0,
+      "no_ai_demand_pct": 100.0,
+      "no_soft_pct": 57.4,
+      "low_edu_pct": 100.0
+    },
+    "Kế toán - Tài chính": {
+      "so_viec": 153,
+      "avi_score": 50.5,
+      "risk_level": "CAO",
+      "routine_ratio_pct": 40.5,
+      "no_ai_demand_pct": 80.4,
+      "no_soft_pct": 20.3,
+      "low_edu_pct": 60.8
+    },
+    "Luật kinh tế": {
+      "so_viec": 60,
+      "avi_score": 30.0,
+      "risk_level": "TRUNG BÌNH",
+      "routine_ratio_pct": 0.0,
+      "no_ai_demand_pct": 100.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    },
+    "Quản trị nhân sự": {
+      "so_viec": 30,
+      "avi_score": 30.0,
+      "risk_level": "TRUNG BÌNH",
+      "routine_ratio_pct": 0.0,
+      "no_ai_demand_pct": 100.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    },
+    "Kinh doanh": {
+      "so_viec": 30,
+      "avi_score": 30.0,
+      "risk_level": "TRUNG BÌNH",
+      "routine_ratio_pct": 0.0,
+      "no_ai_demand_pct": 100.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    },
+    "An toàn thông tin": {
+      "so_viec": 30,
+      "avi_score": 30.0,
+      "risk_level": "TRUNG BÌNH",
+      "routine_ratio_pct": 100.0,
+      "no_ai_demand_pct": 0.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    },
+    "Marketing": {
+      "so_viec": 61,
+      "avi_score": 22.9,
+      "risk_level": "THẤP",
+      "routine_ratio_pct": 0.0,
+      "no_ai_demand_pct": 50.8,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 50.8
+    },
+    "Công nghệ thông tin": {
+      "so_viec": 300,
+      "avi_score": 18.0,
+      "risk_level": "THẤP",
+      "routine_ratio_pct": 20.0,
+      "no_ai_demand_pct": 40.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    },
+    "Giáo dục - Đào tạo": {
+      "so_viec": 60,
+      "avi_score": 15.0,
+      "risk_level": "THẤP",
+      "routine_ratio_pct": 0.0,
+      "no_ai_demand_pct": 50.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    },
+    "Thiết kế đồ họa": {
+      "so_viec": 60,
+      "avi_score": 0.0,
+      "risk_level": "THẤP",
+      "routine_ratio_pct": 0.0,
+      "no_ai_demand_pct": 0.0,
+      "no_soft_pct": 0.0,
+      "low_edu_pct": 0.0
+    }
+  },
+  "skill_heatmap": {
+    "order": [
+      "THPT",
+      "Trung cấp",
+      "Cao đẳng",
+      "Đại học",
+      "Thạc sĩ",
+      "Tiến sĩ"
+    ],
+    "skills": [
+      "Thuyết trình",
+      "Làm việc nhóm",
+      "Sáng tạo",
+      "Đàm phán",
+      "Giao tiếp",
+      "Kỹ năng AI",
+      "Lập trình"
+    ],
+    "matrix": {
+      "THPT": {
+        "Thuyết trình": 0.0,
+        "Làm việc nhóm": 83.3,
+        "Sáng tạo": 0.0,
+        "Đàm phán": 0.0,
+        "Giao tiếp": 50.0,
+        "Kỹ năng AI": 0.0,
+        "Lập trình": 0.0
+      },
+      "Trung cấp": {
+        "Thuyết trình": 0.0,
+        "Làm việc nhóm": 0.0,
+        "Sáng tạo": 33.3,
+        "Đàm phán": 33.3,
+        "Giao tiếp": 100.0,
+        "Kỹ năng AI": 0.0,
+        "Lập trình": 33.3
+      },
+      "Cao đẳng": {
+        "Thuyết trình": 0.0,
+        "Làm việc nhóm": 100.0,
+        "Sáng tạo": 0.0,
+        "Đàm phán": 0.0,
+        "Giao tiếp": 100.0,
+        "Kỹ năng AI": 0.0,
+        "Lập trình": 50.8
+      },
+      "Đại học": {
+        "Thuyết trình": 47.1,
+        "Làm việc nhóm": 76.5,
+        "Sáng tạo": 58.8,
+        "Đàm phán": 35.3,
+        "Giao tiếp": 70.6,
+        "Kỹ năng AI": 41.2,
+        "Lập trình": 58.8
+      },
+      "Thạc sĩ": {
+        "Thuyết trình": 80.0,
+        "Làm việc nhóm": 100.0,
+        "Sáng tạo": 80.0,
+        "Đàm phán": 20.0,
+        "Giao tiếp": 80.0,
+        "Kỹ năng AI": 100.0,
+        "Lập trình": 100.0
+      },
+      "Tiến sĩ": {
+        "Thuyết trình": 0.0,
+        "Làm việc nhóm": 0.0,
+        "Sáng tạo": 0.0,
+        "Đàm phán": 0.0,
+        "Giao tiếp": 0.0,
+        "Kỹ năng AI": 0.0,
+        "Lập trình": 0.0
+      }
+    }
+  },
+  "du_bao_5_nam": {
+    "2027": {
+      "ti_le_yeu_cau_ai_pct": 42.5,
+      "ti_le_yeu_cau_lap_trinh_pct": 57.3,
+      "ti_le_yeu_cau_ngoai_ngu_pct": 68.0,
+      "du_bao_thu_hep_viec_routine_pct": 7.0
+    },
+    "2028": {
+      "ti_le_yeu_cau_ai_pct": 50.1,
+      "ti_le_yeu_cau_lap_trinh_pct": 64.2,
+      "ti_le_yeu_cau_ngoai_ngu_pct": 73.5,
+      "du_bao_thu_hep_viec_routine_pct": 14.0
+    },
+    "2029": {
+      "ti_le_yeu_cau_ai_pct": 59.1,
+      "ti_le_yeu_cau_lap_trinh_pct": 70,
+      "ti_le_yeu_cau_ngoai_ngu_pct": 79.4,
+      "du_bao_thu_hep_viec_routine_pct": 21.0
+    },
+    "2030": {
+      "ti_le_yeu_cau_ai_pct": 69.8,
+      "ti_le_yeu_cau_lap_trinh_pct": 70,
+      "ti_le_yeu_cau_ngoai_ngu_pct": 80,
+      "du_bao_thu_hep_viec_routine_pct": 28.0
+    },
+    "2031": {
+      "ti_le_yeu_cau_ai_pct": 82.4,
+      "ti_le_yeu_cau_lap_trinh_pct": 70,
+      "ti_le_yeu_cau_ngoai_ngu_pct": 80,
+      "du_bao_thu_hep_viec_routine_pct": 35.0
+    }
+  },
+  "canh_bao_va_goi_y": [
+    {
+      "id": "W001",
+      "muc_do": "KHẨN CẤP",
+      "doi_tuong": "Lao động THPT / Phổ thông",
+      "tieu_de": "Nhóm lao động THPT trước ngưỡng thay thế bởi tự động hóa",
+      "noi_dung": "Hiện tại 18.6% vị trí chỉ yêu cầu tốt nghiệp THPT — đây là nhóm có nguy cơ bị thay thế cao nhất bởi robot và AI. Theo dự báo 2031, nhóm việc lặp lại sẽ giảm ~35%. Người lao động cần nâng cấp lên Trung cấp nghề hoặc học kỹ năng số ngay.",
+      "khuyen_nghi": [
+        "Đăng ký học Trung cấp nghề được Nhà nước hỗ trợ học phí",
+        "Học kỹ năng số cơ bản: sử dụng Excel, phần mềm quản lý kho, POS",
+        "Tham gia các chương trình upskilling của địa phương (VNPT, Viettel)"
+      ],
+      "nguon_so_lieu": "Phân tích 1000 bản ghi tuyển dụng từ TopCV, CareerViet, Vieclam24h"
+    },
+    {
+      "id": "W002",
+      "muc_do": "KHẨN CẤP",
+      "doi_tuong": "Toàn bộ người lao động (mọi trình độ)",
+      "tieu_de": "Kỹ năng AI chuyển từ 'điểm cộng' sang 'điều kiện tiên quyết'",
+      "noi_dung": "Hiện tại 36.0% tin tuyển dụng đòi hỏi kỹ năng AI/ML/Prompt Engineering. Dự báo đến 2031 con số này sẽ đạt ~82.4%. Các doanh nghiệp như FPT, VNG, Viettel đã bắt đầu yêu cầu ngay cả nhân viên phi-IT phải biết dùng công cụ AI như ChatGPT, Copilot, Gemini.",
+      "khuyen_nghi": [
+        "Học Prompt Engineering cơ bản (khóa học miễn phí trên Google/Coursera)",
+        "Thực hành dùng AI trong công việc hàng ngày: soạn thảo, phân tích số liệu",
+        "Hướng đến chứng chỉ Google AI Essentials hoặc AWS AI Practitioner"
+      ],
+      "nguon_so_lieu": "Phân tích 1000 bản ghi; WEF Future of Jobs Report 2025"
+    },
+    {
+      "id": "W003",
+      "muc_do": "QUAN TRỌNG",
+      "doi_tuong": "Sinh viên & Fresher mọi ngành",
+      "tieu_de": "Kỹ năng lập trình lan rộng sang ngành phi-IT",
+      "noi_dung": "51.2% vị trí tuyển dụng yêu cầu ít nhất 1 ngôn ngữ lập trình — bao gồm cả Kế toán (SQL, C#), Marketing (Python để phân tích), Nhân sự (Excel VBA, Python automation). Python và SQL đang trở thành 'ngoại ngữ thứ hai' của thế kỷ 21.",
+      "khuyen_nghi": [
+        "Ưu tiên học Python (đa năng nhất) và SQL (nền tảng dữ liệu)",
+        "Hoàn thành khóa Python for Everybody (Coursera, miễn phí audit)",
+        "Xây dựng ít nhất 1 project thực tế liên quan đến ngành nghề của mình"
+      ],
+      "nguon_so_lieu": "Phân tích 1000 bản ghi tuyển dụng"
+    },
+    {
+      "id": "W004",
+      "muc_do": "QUAN TRỌNG",
+      "doi_tuong": "Sinh viên / Người đang đi làm muốn tăng thu nhập",
+      "tieu_de": "Ngoại ngữ tạo khoảng cách lương lên đến 40-60%",
+      "noi_dung": "63.0% vị trí yêu cầu ngoại ngữ, tập trung ở các vị trí lương cao (IELTS 6.0+, Toeic 500+, Hoa ngữ, Tiếng Nhật). Dữ liệu cho thấy vị trí có yêu cầu ngoại ngữ chủ yếu đòi hỏi trình độ Đại học trở lên với chuyên môn Luật, Tài chính, IT. Hội nhập ASEAN và FDI tiếp tục gia tăng sức ép về ngoại ngữ.",
+      "khuyen_nghi": [
+        "Đặt mục tiêu tối thiểu Toeic 500 trong 6 tháng (tương đương B1 châu Âu)",
+        "Học tiếng Hoa HSK 3 nếu làm việc trong lĩnh vực sản xuất/thương mại",
+        "Dùng app Anki + podcast để học mỗi ngày 20 phút, không cần đi lớp"
+      ],
+      "nguon_so_lieu": "Phân tích 1000 bản ghi tuyển dụng từ 3 nguồn"
+    },
+    {
+      "id": "W005",
+      "muc_do": "LƯU Ý",
+      "doi_tuong": "Toàn bộ người lao động",
+      "tieu_de": "Kỹ năng mềm là 'lá chắn' duy nhất trước làn sóng AI",
+      "noi_dung": "Giao tiếp (72.7%), Đàm phán (24.1%), Làm việc nhóm (75.6%) xuất hiện trong hầu hết tin tuyển dụng lương cao. AI có thể thay thế tác vụ kỹ thuật nhưng KHÔNG THỂ thay thế khả năng thương lượng, đồng cảm và dẫn dắt con người. Nghiên cứu McKinsey 2024 xác nhận kỹ năng mềm sẽ tăng giá trị 50% vào năm 2030.",
+      "khuyen_nghi": [
+        "Tham gia câu lạc bộ Toastmasters để rèn kỹ năng thuyết trình",
+        "Thực hành đàm phán trong các dự án nhóm, thực tập, làm thêm",
+        "Đọc sách Kỹ năng mềm: 'Never Split the Difference', 'How to Win Friends'"
+      ],
+      "nguon_so_lieu": "Phân tích 1000 bản ghi; McKinsey Global Institute 2024"
+    },
+    {
+      "id": "W006",
+      "muc_do": "LƯU Ý",
+      "doi_tuong": "Sinh viên Đại học năm 3-4 / Người muốn thăng tiến",
+      "tieu_de": "Thị trường phân hóa mạnh: Thạc sĩ + AI = Vị thế cạnh tranh vượt trội",
+      "noi_dung": "15.0% vị trí yêu cầu Thạc sĩ, tập trung vào AI Engineer, An ninh mạng, Nghiên cứu dữ liệu và Quản lý cấp cao. Xu hướng 2026-2031: Lương nhóm Thạc sĩ + Kỹ năng AI sẽ cao hơn Đại học thông thường tới 2.5 lần. Các chương trình Thạc sĩ online (VinUni, RMIT Online) đang giúp rút ngắn thời gian và chi phí học.",
+      "khuyen_nghi": [
+        "Xem xét lộ trình Thạc sĩ trong nước (học bổng VinIF, NAFOSTED)",
+        "Học chứng chỉ quốc tế thay thế: Google Professional Certificate, AWS Solutions Architect",
+        "Xây dựng danh mục dự án AI/Data Science trên GitHub ngay từ hôm nay"
+      ],
+      "nguon_so_lieu": "Phân tích 1000 bản ghi; VinIF Scholarship Data 2025"
+    },
+    {
+      "id": "W007",
+      "muc_do": "KHẨN CẤP",
+      "doi_tuong": "Người lao động trong ngành có AVI cao",
+      "tieu_de": "Cảnh báo đỏ: Các ngành có nguy cơ tự động hóa cao nhất",
+      "noi_dung": "Nhóm ngành rủi ro cao nhất (theo Chỉ số AI Vulnerability Index): null (AVI=89.4), Kế toán - Tài chính (AVI=50.5). Các vị trí trong nhóm này thiếu cả kỹ năng sáng tạo lẫn kỹ năng AI, đồng thời yêu cầu trình độ thấp — đây là đặc điểm điển hình của công việc sẽ bị tự động hóa đầu tiên theo lộ trình của các doanh nghiệp lớn.",
+      "khuyen_nghi": [
+        "Chủ động học kỹ năng bổ trợ liên quan đến AI/dữ liệu trong ngành của mình",
+        "Tìm hiểu về nghề mới liên kết: AI-assisted Accounting, Smart Security Systems",
+        "Tham gia khóa đào tạo chuyển đổi nghề nghiệp (reskilling) của Trung tâm Việc làm"
+      ],
+      "nguon_so_lieu": "AVI Index tính từ 1000 bản ghi; WEF Future of Jobs 2025"
+    }
+  ],
+  "summary_insights": {
+    "diem_noi_bat": [
+      "Có 36.0% vị trí yêu cầu Kỹ năng AI — xu hướng tăng mạnh",
+      "Có 51.2% vị trí yêu cầu kỹ năng lập trình",
+      "Có 63.0% vị trí yêu cầu ngoại ngữ",
+      "Kỹ năng Giao tiếp được yêu cầu ở 72.7% vị trí",
+      "Tổng 10 nhóm ngành được đánh giá AVI; 2 nhóm rủi ro cao"
+    ],
+    "nganh_tang_truong_cao": [
+      "Công nghệ thông tin",
+      "An toàn thông tin",
+      "Marketing Digital"
+    ],
+    "nganh_rui_ro_cao": [
+      "null"
+    ]
+  }
+}

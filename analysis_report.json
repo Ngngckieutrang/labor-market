@@ -6,7 +6,7 @@
       "CareerViet.vn",
       "Vieclam24h.vn"
     ],
-    "ngay_phan_tich": "2026-11-05 14:31",
+    "ngay_phan_tich": "2026-11-12 16:23",
     "tong_ban_ghi": 1000,
     "phien_ban": "2.0.0"
   },
@@ -94,21 +94,21 @@
       "Công ty Dịch vụ Bảo vệ Long Hải": 31
     },
     "top_jobs": {
-      "Nhân viên an ninh tòa nhà": 30,
       "Kỹ sư Thiết kế đồ họa 3D": 30,
       "Kỹ sư An ninh mạng": 30,
       "Kỹ sư AI / Machine Learning": 30,
       "Nghiên cứu viên Khoa học dữ liệu": 30,
       "Trưởng phòng Công nghệ (CTO)": 30,
-      "Bảo vệ mục tiêu doanh nghiệp": 28,
-      "Nhân viên phục vụ nhà hàng": 28,
+      "Kế toán thuế": 29,
       "Tài xế xe tải nội thành": 28,
-      "Nhân viên kho — kiểm hàng": 28,
-      "Nhân viên Telesale": 28,
+      "Nhân viên Thiết kế UI/UX": 28,
+      "DevOps / Cloud Engineer": 28,
+      "Nhân viên an ninh tòa nhà": 27,
+      "Nhân viên kho — kiểm hàng": 27,
       "Công nhân sản xuất": 27,
       "Kế toán tổng hợp": 27,
-      "Kế toán thuế": 27,
-      "Nhân viên thu ngân": 27
+      "Nhân viên Telesale": 27,
+      "Chuyên viên hành chính": 27
     }
   },
   "ai_vulnerability_index": {
@@ -393,8 +393,8 @@
       "id": "W007",
       "muc_do": "KHẨN CẤP",
       "doi_tuong": "Người lao động trong ngành có AVI cao",
-      "tieu_de": "Cảnh báo đỏ: Các ngành có nguy cơ tự động hóa cao nhất",
-      "noi_dung": "Nhóm ngành rủi ro cao nhất (theo Chỉ số AI Vulnerability Index): null (AVI=89.4), Kế toán - Tài chính (AVI=50.5). Các vị trí trong nhóm này thiếu cả kỹ năng sáng tạo lẫn kỹ năng AI, đồng thời yêu cầu trình độ thấp — đây là đặc điểm điển hình của công việc sẽ bị tự động hóa đầu tiên theo lộ trình của các doanh nghiệp lớn.",
+      "tieu_de": "Cảnh báo đỏ: Các ngành có nguy cơ tự động hóa cao nhất (Lao động phổ thông & Vận hành sự vụ, Kế toán - Tài chính)",
+      "noi_dung": "Nhóm ngành rủi ro cao nhất (theo Chỉ số AI Vulnerability Index): Lao động phổ thông & Vận hành sự vụ (AVI=89.4), Kế toán - Tài chính (AVI=50.5). Các vị trí trong nhóm này thiếu cả kỹ năng sáng tạo lẫn kỹ năng AI, đồng thời yêu cầu trình độ thấp — đây là đặc điểm điển hình của công việc sẽ bị tự động hóa đầu tiên theo lộ trình của các doanh nghiệp lớn.",
       "khuyen_nghi": [
         "Chủ động học kỹ năng bổ trợ liên quan đến AI/dữ liệu trong ngành của mình",
         "Tìm hiểu về nghề mới liên kết: AI-assisted Accounting, Smart Security Systems",
@@ -417,7 +417,8 @@
       "Marketing Digital"
     ],
     "nganh_rui_ro_cao": [
-      "null"
+      "Lao động phổ thông & Vận hành sự vụ",
+      "Kế toán - Tài chính"
     ]
   }
 }

@@ -410,12 +410,14 @@ def generate_warnings(descriptive: Dict, avi: Dict, forecast: Dict) -> List[Dict
     high_risk = {k: v for k, v in avi.items() if v["risk_level"] in ("RẤT CAO", "CAO")}
     if high_risk:
         top_risk = list(high_risk.items())[:3]
-        nghanh_names = ", ".join(f"{k} (AVI={v['avi_score']})" for k, v in top_risk)
+        def _fmt(name):
+            return "Lao động phổ thông & Vận hành sự vụ" if str(name).strip().lower() in ("null", "none", "nan", "") else str(name)
+        nghanh_names = ", ".join(f"{_fmt(k)} (AVI={v['avi_score']})" for k, v in top_risk)
         warnings.append({
             "id": "W007",
             "muc_do": "KHẨN CẤP",
             "doi_tuong": "Người lao động trong ngành có AVI cao",
-            "tieu_de": f"Cảnh báo đỏ: Các ngành có nguy cơ tự động hóa cao nhất",
+            "tieu_de": f"Cảnh báo đỏ: Các ngành có nguy cơ tự động hóa cao nhất ({', '.join(_fmt(k) for k, v in top_risk)})",
             "noi_dung": (
                 f"Nhóm ngành rủi ro cao nhất (theo Chỉ số AI Vulnerability Index): "
                 f"{nghanh_names}. "
@@ -482,7 +484,7 @@ def run_analysis(csv_path: str, output_path: str = "analysis_report.json"):
                 f"{sum(1 for v in avi.values() if v['risk_level'] in ('RẤT CAO','CAO'))} nhóm rủi ro cao",
             ],
             "nganh_tang_truong_cao": ["Công nghệ thông tin", "An toàn thông tin", "Marketing Digital"],
-            "nganh_rui_ro_cao": [k for k, v in avi.items() if v["risk_level"] == "RẤT CAO"][:3],
+            "nganh_rui_ro_cao": [("Lao động phổ thông & Vận hành sự vụ" if k == "null" else k) for k, v in avi.items() if v["risk_level"] in ("RẤT CAO", "CAO")][:3],
         }
     }
 

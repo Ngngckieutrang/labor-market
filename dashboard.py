@@ -85,15 +85,36 @@ def load_df(path: str) -> pd.DataFrame:
 # ══════════════════════════════════════════════════════════════════════════════
 # UI HELPERS
 # ══════════════════════════════════════════════════════════════════════════════
-def kpi_card(col, label: str, value: str, delta: str = "", color: str = CLR_PRIMARY):
+def format_nganh_name(name: str) -> str:
+    """Chuyển đổi mã ngành / chuyên môn sang tên hiển thị đầy đủ, chuyên nghiệp."""
+    if not name or str(name).strip().lower() in ("null", "none", "nan", ""):
+        return "Lao động phổ thông & Vận hành sự vụ (Kho, Vận tải, Dịch vụ, SX...)"
+    return str(name)
+
+def format_nganh_short(name: str) -> str:
+    """Tên ngắn gọn dùng trên card, nhãn, badge."""
+    if not name or str(name).strip().lower() in ("null", "none", "nan", ""):
+        return "Lao động phổ thông"
+    return str(name)
+
+def get_top_jobs_for_nganh(df_source: pd.DataFrame, nganh_key: str, top_n: int = 6) -> list:
+    """Trích xuất các vị trí công việc phổ biến nhất trong ngành từ tập dữ liệu."""
+    if not nganh_key or str(nganh_key).strip().lower() in ("null", "none", "nan", ""):
+        sub = df_source[df_source["Chuyên môn"].isna() | (df_source["Chuyên môn"] == "null")]
+    else:
+        sub = df_source[df_source["Chuyên môn"] == nganh_key]
+    return sub["Tên công việc"].value_counts().head(top_n).index.tolist()
+
+def kpi_card(col, label: str, value: str, delta: str = "", color: str = CLR_PRIMARY, subtext_html: str = ""):
     col.markdown(
         f"""
         <div style="background:{color}11;border-left:4px solid {color};
-                    padding:14px 18px;border-radius:8px;margin-bottom:8px">
+                    padding:14px 18px;border-radius:8px;margin-bottom:8px;min-height:108px">
           <p style="margin:0;font-size:12px;color:{CLR_NEUTRAL};font-weight:600;
                     text-transform:uppercase;letter-spacing:.6px">{label}</p>
           <p style="margin:4px 0 0;font-size:28px;font-weight:700;color:{color}">{value}</p>
           {"<p style='margin:2px 0 0;font-size:12px;color:#6b7280'>"+delta+"</p>" if delta else ""}
+          {subtext_html}
         </div>
         """,
         unsafe_allow_html=True,
@@ -204,12 +225,12 @@ with st.sidebar:
     st.markdown("### 🔍 Bộ lọc dữ liệu")
     filter_trinh_do = st.multiselect(
         "Trình độ học vấn",
-        options=df["Trình độ"].unique().tolist(),
+        options=[c for c in df["Trình độ"].unique() if pd.notna(c) and str(c) != "null"],
         default=[]
     )
     filter_chuyen_mon = st.multiselect(
         "Chuyên môn / Ngành",
-        options=[c for c in df["Chuyên môn"].unique() if c != "null"],
+        options=[c for c in df["Chuyên môn"].unique() if pd.notna(c) and str(c) != "null"],
         default=[]
     )
     filter_ai = st.radio("Yêu cầu Kỹ năng AI?", ["Tất cả", "Có", "Không"], index=0)
@@ -259,9 +280,235 @@ kpi_card(c3, "Yêu cầu Lập trình",
 kpi_card(c4, "Yêu cầu Ngoại ngữ",
          f"{round((df_filtered['Ngoại ngữ']!='null').mean()*100,1)}%",
          "", "#7c3aed")
+
+high_risk_items = [
+    (k, v) for k, v in avi.items() if v.get("risk_level") in ("RẤT CAO", "CAO")
+]
+high_risk_badges = "".join([
+    f"<span style='background:{RISK_COLOR.get(v['risk_level'], CLR_DANGER)}22;"
+    f"color:{RISK_COLOR.get(v['risk_level'], CLR_DANGER)};"
+    f"padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block;margin:3px 3px 0 0'>"
+    f"{'🔴' if v['risk_level']=='RẤT CAO' else '🟠'} {format_nganh_short(k)} ({v['avi_score']})</span>"
+    for k, v in high_risk_items
+])
 kpi_card(c5, "Nhóm rủi ro cao",
-         str(sum(1 for v in avi.values() if v['risk_level'] in ('RẤT CAO','CAO'))),
-         "ngành theo AVI Index", CLR_DANGER)
+         str(len(high_risk_items)),
+         "ngành theo AVI Index", CLR_DANGER,
+         subtext_html=f"<div style='margin-top:6px'>{high_risk_badges}</div>")
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MỤC THÔNG TIN NGÀNH BỊ RỦI RO CAO (CHI TIẾT THEO CHỈ SỐ AVI)
+# ══════════════════════════════════════════════════════════════════════════════
+st.markdown("""
+<div style="background:linear-gradient(135deg, #fff1f2 0%, #fff7ed 100%);
+            border:1px solid #fed7aa;border-left:5px solid #e02424;
+            padding:16px 20px;border-radius:12px;margin:18px 0 16px 0">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <div>
+      <h3 style="margin:0;color:#991b1b;font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px">
+        ⚠️ DANH SÁCH & THÔNG TIN CÁC NGÀNH NGHỀ ĐANG BỊ RỦI RO CAO NHẤT (AVI INDEX ≥ 50)
+      </h3>
+      <p style="margin:6px 0 0;font-size:13px;color:#475569;line-height:1.5">
+        Theo <strong>Chỉ số Nguy cơ Tự động hóa AI (AI Vulnerability Index - AVI)</strong>, thị trường hiện ghi nhận 
+        <strong>2 nhóm ngành</strong> đang chịu rủi ro cao nhất trước làn sóng tự động hóa, robot và AI.
+      </p>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+col_hr1, col_hr2 = st.columns(2)
+
+# Chi tiết ngành 1: Lao động phổ thông & Vận hành sự vụ
+null_avi = avi.get("null", {})
+top_jobs_null = get_top_jobs_for_nganh(df, "null", top_n=6)
+jobs_html_null = "".join([
+    f"<span style='background:#f1f5f9;color:#334155;padding:3px 8px;border-radius:6px;font-size:12px;display:inline-block;margin:3px 3px 0 0'>• {j}</span>"
+    for j in top_jobs_null
+])
+
+with col_hr1:
+    st.markdown(
+        f"""
+        <div style="background:white;border:1px solid #fecdd3;border-top:4px solid #e02424;
+                    padding:18px 20px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);height:100%">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span style="font-size:17px;font-weight:800;color:#991b1b">
+              🔴 Lao động phổ thông & Vận hành sự vụ
+            </span>
+            <span style="background:#fee2e2;color:#991b1b;font-size:11px;font-weight:800;
+                         padding:3px 10px;border-radius:12px;text-transform:uppercase">
+              RẤT CAO
+            </span>
+          </div>
+          <p style="font-size:12px;color:#64748b;margin:0 0 12px">
+            (Mã phân loại trong hệ thống: <code>null / Lao động phổ thông</code>)
+          </p>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;background:#fef2f2;padding:12px;border-radius:8px">
+            <div>
+              <p style="margin:0;font-size:11px;color:#991b1b;font-weight:600">ĐIỂM AVI SCORE</p>
+              <p style="margin:2px 0 0;font-size:24px;font-weight:800;color:#e02424">{null_avi.get('avi_score', 89.4)} <span style="font-size:13px;font-weight:400">/ 100</span></p>
+            </div>
+            <div>
+              <p style="margin:0;font-size:11px;color:#991b1b;font-weight:600">QUY MÔ TUYỂN DỤNG</p>
+              <p style="margin:2px 0 0;font-size:24px;font-weight:800;color:#991b1b">{null_avi.get('so_viec', 216):,} <span style="font-size:13px;font-weight:400">vị trí (21.6%)</span></p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1e293b">
+              💼 Các vị trí việc làm chịu rủi ro lớn nhất:
+            </p>
+            <div>{jobs_html_null}</div>
+          </div>
+
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:8px;margin-bottom:12px">
+            <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#334155">🔍 4 Chỉ số thành phần rủi ro:</p>
+            <ul style="margin:0;padding-left:18px;font-size:12px;color:#475569;line-height:1.6">
+              <li><strong>Tác vụ mang tính lặp lại (Routine):</strong> <span style="color:#e02424;font-weight:700">{null_avi.get('routine_ratio_pct', 100.0)}%</span> (toàn bộ là công việc rập khuôn)</li>
+              <li><strong>Không đòi hỏi kỹ năng AI:</strong> <span style="color:#e02424;font-weight:700">{null_avi.get('no_ai_demand_pct', 100.0)}%</span></li>
+              <li><strong>Thiếu kỹ năng mềm (Đàm phán/Sáng tạo):</strong> <span style="color:#e02424;font-weight:700">{null_avi.get('no_soft_pct', 57.4)}%</span></li>
+              <li><strong>Yêu cầu trình độ dưới Đại học:</strong> <span style="color:#e02424;font-weight:700">{null_avi.get('low_edu_pct', 100.0)}%</span> (100% THPT & Cao đẳng)</li>
+            </ul>
+          </div>
+
+          <div style="background:#fff1f2;border-left:3px solid #e02424;padding:10px 12px;border-radius:6px;margin-bottom:10px">
+            <p style="margin:0;font-size:12px;color:#991b1b;line-height:1.5">
+              <strong>⚡ Nguyên nhân:</strong> Các công việc cơ bắp, rập khuôn định kỳ sẽ bị robot công nghiệp, hệ thống camera AI, thiết bị POS tự phục vụ và dây chuyền tự động thay thế nhanh nhất.
+            </p>
+          </div>
+
+          <div style="background:#f0fdf4;border-left:3px solid #057a55;padding:10px 12px;border-radius:6px">
+            <p style="margin:0;font-size:12px;color:#065f46;line-height:1.5">
+              <strong>💡 Khuyến nghị ứng phó:</strong> Đăng ký học nghề kỹ thuật (Trung cấp nghề), bồi dưỡng kỹ năng tin học số cơ bản và vận hành máy móc hiện đại.
+            </p>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+# Chi tiết ngành 2: Kế toán - Tài chính
+kt_avi = avi.get("Kế toán - Tài chính", {})
+top_jobs_kt = get_top_jobs_for_nganh(df, "Kế toán - Tài chính", top_n=6)
+jobs_html_kt = "".join([
+    f"<span style='background:#f1f5f9;color:#334155;padding:3px 8px;border-radius:6px;font-size:12px;display:inline-block;margin:3px 3px 0 0'>• {j}</span>"
+    for j in top_jobs_kt
+])
+
+with col_hr2:
+    st.markdown(
+        f"""
+        <div style="background:white;border:1px solid #fed7aa;border-top:4px solid #ff5a1f;
+                    padding:18px 20px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04);height:100%">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span style="font-size:17px;font-weight:800;color:#9a3412">
+              🟠 Kế toán - Tài chính
+            </span>
+            <span style="background:#ffedd5;color:#9a3412;font-size:11px;font-weight:800;
+                         padding:3px 10px;border-radius:12px;text-transform:uppercase">
+              CAO
+            </span>
+          </div>
+          <p style="font-size:12px;color:#64748b;margin:0 0 12px">
+            (Chuyên môn: <code>Kế toán - Tài chính</code>)
+          </p>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;background:#fff7ed;padding:12px;border-radius:8px">
+            <div>
+              <p style="margin:0;font-size:11px;color:#9a3412;font-weight:600">ĐIỂM AVI SCORE</p>
+              <p style="margin:2px 0 0;font-size:24px;font-weight:800;color:#ff5a1f">{kt_avi.get('avi_score', 50.5)} <span style="font-size:13px;font-weight:400">/ 100</span></p>
+            </div>
+            <div>
+              <p style="margin:0;font-size:11px;color:#9a3412;font-weight:600">QUY MÔ TUYỂN DỤNG</p>
+              <p style="margin:2px 0 0;font-size:24px;font-weight:800;color:#9a3412">{kt_avi.get('so_viec', 153):,} <span style="font-size:13px;font-weight:400">vị trí (15.3%)</span></p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#1e293b">
+              💼 Các vị trí việc làm chịu rủi ro lớn nhất:
+            </p>
+            <div>{jobs_html_kt}</div>
+          </div>
+
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:8px;margin-bottom:12px">
+            <p style="margin:0 0 6px;font-size:12px;font-weight:700;color:#334155">🔍 4 Chỉ số thành phần rủi ro:</p>
+            <ul style="margin:0;padding-left:18px;font-size:12px;color:#475569;line-height:1.6">
+              <li><strong>Tác vụ mang tính lặp lại (Routine):</strong> <span style="color:#ff5a1f;font-weight:700">{kt_avi.get('routine_ratio_pct', 40.5)}%</span> (nhập chứng từ, đối soát sổ)</li>
+              <li><strong>Không đòi hỏi kỹ năng AI:</strong> <span style="color:#ff5a1f;font-weight:700">{kt_avi.get('no_ai_demand_pct', 80.4)}%</span> (đa số chưa dùng AI)</li>
+              <li><strong>Thiếu kỹ năng mềm (Đàm phán/Sáng tạo):</strong> <span style="color:#ff5a1f;font-weight:700">{kt_avi.get('no_soft_pct', 20.3)}%</span></li>
+              <li><strong>Yêu cầu trình độ dưới Đại học:</strong> <span style="color:#ff5a1f;font-weight:700">{kt_avi.get('low_edu_pct', 60.8)}%</span> (60.8% Trung cấp/Cao đẳng)</li>
+            </ul>
+          </div>
+
+          <div style="background:#fff7ed;border-left:3px solid #ff5a1f;padding:10px 12px;border-radius:6px;margin-bottom:10px">
+            <p style="margin:0;font-size:12px;color:#9a3412;line-height:1.5">
+              <strong>⚡ Nguyên nhân:</strong> Phần mềm hóa đơn điện tử tự động, công nghệ OCR quét chứng từ và phần mềm RPA tự động hạch toán đang cắt giảm mạnh nhu cầu kế toán nhập liệu thủ công.
+            </p>
+          </div>
+
+          <div style="background:#f0fdf4;border-left:3px solid #057a55;padding:10px 12px;border-radius:6px">
+            <p style="margin:0;font-size:12px;color:#065f46;line-height:1.5">
+              <strong>💡 Khuyến nghị ứng phó:</strong> Học ngay kỹ năng phân tích dữ liệu (Python, SQL, Power BI), ứng dụng AI kế toán và hướng tới kiểm toán nội bộ / tư vấn tài chính chiến lược.
+            </p>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+with st.expander("📊 Xem bảng so sánh đối đầu chi tiết 2 ngành rủi ro cao nhất", expanded=False):
+    cmp_df = pd.DataFrame([
+        {
+            "Tiêu chí": "Tên ngành & Chuyên môn",
+            "Ngành 1 (RẤT CAO)": "Lao động phổ thông & Vận hành sự vụ",
+            "Ngành 2 (CAO)": "Kế toán - Tài chính",
+        },
+        {
+            "Tiêu chí": "Mức độ rủi ro (Risk Level)",
+            "Ngành 1 (RẤT CAO)": "🔴 RẤT CAO",
+            "Ngành 2 (CAO)": "🟠 CAO",
+        },
+        {
+            "Tiêu chí": "Điểm rủi ro AVI (0 - 100)",
+            "Ngành 1 (RẤT CAO)": f"{null_avi.get('avi_score', 89.4)}",
+            "Ngành 2 (CAO)": f"{kt_avi.get('avi_score', 50.5)}",
+        },
+        {
+            "Tiêu chí": "Số lượng tin tuyển dụng",
+            "Ngành 1 (RẤT CAO)": f"{null_avi.get('so_viec', 216):,} việc (21.6%)",
+            "Ngành 2 (CAO)": f"{kt_avi.get('so_viec', 153):,} việc (15.3%)",
+        },
+        {
+            "Tiêu chí": "Tác vụ lặp lại (Routine %)",
+            "Ngành 1 (RẤT CAO)": f"{null_avi.get('routine_ratio_pct', 100.0)}%",
+            "Ngành 2 (CAO)": f"{kt_avi.get('routine_ratio_pct', 40.5)}%",
+        },
+        {
+            "Tiêu chí": "Không yêu cầu kỹ năng AI (%)",
+            "Ngành 1 (RẤT CAO)": f"{null_avi.get('no_ai_demand_pct', 100.0)}%",
+            "Ngành 2 (CAO)": f"{kt_avi.get('no_ai_demand_pct', 80.4)}%",
+        },
+        {
+            "Tiêu chí": "Yêu cầu dưới Đại học (%)",
+            "Ngành 1 (RẤT CAO)": f"{null_avi.get('low_edu_pct', 100.0)}%",
+            "Ngành 2 (CAO)": f"{kt_avi.get('low_edu_pct', 60.8)}%",
+        },
+        {
+            "Tiêu chí": "Vị trí việc làm chịu rủi ro",
+            "Ngành 1 (RẤT CAO)": "Tài xế, Bảo vệ, Công nhân, Kiểm kho, Phục vụ, Hành chính",
+            "Ngành 2 (CAO)": "Thu ngân, Kế toán tổng hợp sơ cấp, Kế toán thuế",
+        },
+        {
+            "Tiêu chí": "Kỹ năng cần bổ sung khẩn cấp",
+            "Ngành 1 (RẤT CAO)": "Trung cấp nghề kỹ thuật, tin học văn phòng, kỹ năng số",
+            "Ngành 2 (CAO)": "Python, SQL, Power BI, AI kế toán, chứng chỉ ACCA/CPA",
+        },
+    ])
+    st.dataframe(cmp_df, use_container_width=True, hide_index=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -411,7 +658,7 @@ with tab2:
     # Biểu đồ AI Vulnerability Index theo ngành
     section_header("🤖 Chỉ số Nguy cơ Tự động hóa AI (AVI Index) theo Ngành")
     avi_df = pd.DataFrame([
-        {"Ngành": k, "AVI Score": v["avi_score"], "Mức rủi ro": v["risk_level"],
+        {"Ngành": format_nganh_name(k), "AVI Score": v["avi_score"], "Mức rủi ro": v["risk_level"],
          "Số việc": v["so_viec"]}
         for k, v in avi.items()
     ]).sort_values("AVI Score", ascending=False)
@@ -502,10 +749,20 @@ with tab3:
         warning_card(w)
 
     # Thêm: Top ngành rủi ro bảng
-    section_header("📊 Bảng chi tiết Chỉ số AVI theo Ngành")
+    section_header("📊 Bảng chi tiết Chỉ số AVI theo Ngành", "Đánh giá mức độ rủi ro tự động hóa AI cho toàn bộ các nhóm ngành")
+    st.markdown("""
+    <div style="background:#fff1f2;border:1px solid #fecdd3;border-left:4px solid #e02424;padding:14px 18px;border-radius:8px;margin-bottom:16px">
+      <h4 style="margin:0 0 6px;color:#991b1b;font-size:15px;font-weight:700">🚨 2 Nhóm ngành thuộc vùng Báo động Đỏ & Báo động Cam:</h4>
+      <p style="margin:0;font-size:13px;color:#334155;line-height:1.6">
+        • <strong style="color:#991b1b">Lao động phổ thông & Vận hành sự vụ</strong> (AVI = <strong>89.4 / 100</strong> — 🔴 <strong>RẤT CAO</strong>): 216 vị trí (Bảo vệ, Lái xe tải, Công nhân sản xuất, Kiểm kho, Phục vụ...). Tác vụ lặp lại 100%, không yêu cầu AI.<br>
+        • <strong style="color:#9a3412">Kế toán - Tài chính</strong> (AVI = <strong>50.5 / 100</strong> — 🟠 <strong>CAO</strong>): 153 vị trí (Thu ngân, Kế toán tổng hợp, Kế toán thuế...). Nguy cơ cao từ RPA và OCR hóa đơn tự động.
+      </p>
+    </div>
+    """, unsafe_allow_html=True)
+
     avi_detail = pd.DataFrame([
         {
-            "Ngành nghề": k,
+            "Ngành nghề": format_nganh_name(k),
             "Điểm AVI (0-100)": v["avi_score"],
             "Mức rủi ro": v["risk_level"],
             "Số vị trí": v["so_viec"],
@@ -617,7 +874,7 @@ with tab4:
         avi_score = v["avi_score"]
         growth = -avi_score * 0.35   # Ngành AVI cao → dự báo co lại
         impact_data.append({
-            "Ngành": nghanh,
+            "Ngành": format_nganh_short(nghanh),
             "Dự báo thay đổi (%)": round(growth, 1),
             "Xu hướng": "Giảm" if growth < 0 else "Tăng"
         })
@@ -652,7 +909,7 @@ with tab5:
             inp_trinh_do = st.selectbox("Trình độ học vấn của bạn:",
                 ["THPT", "Trung cấp", "Cao đẳng", "Đại học", "Thạc sĩ", "Tiến sĩ"])
             inp_chuyen_mon = st.selectbox("Chuyên môn chính:",
-                ["null", "Công nghệ thông tin", "Kế toán - Tài chính", "Luật kinh tế",
+                ["Lao động phổ thông / Sự vụ (null)", "Công nghệ thông tin", "Kế toán - Tài chính", "Luật kinh tế",
                  "Marketing", "Thiết kế đồ họa", "An toàn thông tin",
                  "Quản trị nhân sự", "Kinh doanh", "Giáo dục - Đào tạo",
                  "Y tế - Dược", "Xây dựng - Kiến trúc"])
@@ -680,10 +937,11 @@ with tab5:
 
     if submitted:
         st.markdown("---")
+        raw_chuyen_mon = "null" if "null" in inp_chuyen_mon else inp_chuyen_mon
         # Tính điểm phù hợp
         profile = {
             "Trình độ": inp_trinh_do,
-            "Chuyên môn": inp_chuyen_mon,
+            "Chuyên môn": raw_chuyen_mon,
             "Ngoại ngữ": inp_ngoaingu,
             "Lập trình": inp_coding,
             "Kỹ năng AI": "có" if inp_ai == "Có" else "không",
@@ -696,11 +954,12 @@ with tab5:
 
         # Khớp với bộ dữ liệu
         matched = df[df["Trình độ"] == inp_trinh_do]
-        if inp_chuyen_mon != "null":
-            matched_cm = df[df["Chuyên môn"] == inp_chuyen_mon]
+        if raw_chuyen_mon != "null":
+            matched_cm = df[df["Chuyên môn"] == raw_chuyen_mon]
             match_pct = round(len(matched_cm) / len(df) * 100, 1)
         else:
-            match_pct = round(len(matched) / len(df) * 100, 1)
+            matched_cm = df[df["Chuyên môn"].isna() | (df["Chuyên môn"] == "null")]
+            match_pct = round(len(matched_cm) / len(df) * 100, 1)
 
         # Điểm hồ sơ
         score = 0
@@ -718,7 +977,7 @@ with tab5:
         score = min(score, 100)
 
         # AVI của ngành người dùng
-        user_avi = avi.get(inp_chuyen_mon, {})
+        user_avi = avi.get(raw_chuyen_mon, {})
         user_avi_score = user_avi.get("avi_score", 50)
         user_risk = user_avi.get("risk_level", "TRUNG BÌNH")
 
